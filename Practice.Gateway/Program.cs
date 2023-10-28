@@ -3,7 +3,7 @@ using Ocelot.Middleware;
 using Practice.Gateway.Aggregator;
 
 var builder = WebApplication.CreateBuilder(args);
-
+app.useStaticfiles()
 // Add services to the container.
 builder.Configuration.AddJsonFile("ocelot.json");
 // Add services to the container.
