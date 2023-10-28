@@ -17,4 +17,10 @@
     <Folder Include="Mapper\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="ocelot.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
