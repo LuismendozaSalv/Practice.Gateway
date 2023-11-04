@@ -5,7 +5,8 @@ using Practice.Gateway.Aggregator;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Configuration.AddJsonFile("ocelot.json");
+builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+
 // Add services to the container.
 builder.Services.AddOcelot()
     .AddSingletonDefinedAggregator<UsersPostsAggregator>();
@@ -26,7 +27,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-await app.UseOcelot();
+app.UseOcelot().Wait();
 app.MapControllers();
 
 app.Run();
