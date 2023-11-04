@@ -5,16 +5,10 @@ using Practice.Gateway.Aggregator;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-//builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-//builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
-//    .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
-//    .AddEnvironmentVariables();
-var ocelotConfig = builder.Configuration.AddJsonFile(Path.Combine(builder.Environment.ContentRootPath, "ocelot.json"), optional: false, reloadOnChange: true);
-builder.Services.AddOcelot(builder.Configuration).
-    AddSingletonDefinedAggregator<UsersPostsAggregator>();
+builder.Configuration.AddJsonFile("ocelot.json");
 // Add services to the container.
-//builder.Services.AddOcelot()
-    //.AddSingletonDefinedAggregator<UsersPostsAggregator>();
+builder.Services.AddOcelot()
+    .AddSingletonDefinedAggregator<UsersPostsAggregator>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -32,7 +26,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-app.UseOcelot().Wait();
+await app.UseOcelot();
 app.MapControllers();
 
 app.Run();
