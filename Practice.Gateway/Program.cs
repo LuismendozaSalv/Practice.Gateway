@@ -6,9 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 //builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
-    .AddEnvironmentVariables();
+//builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
+//    .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
+//    .AddEnvironmentVariables();
+var ocelotConfig = builder.Configuration.AddJsonFile(Path.Combine(builder.Environment.ContentRootPath, "ocelot.json"), optional: false, reloadOnChange: true);
 builder.Services.AddOcelot(builder.Configuration).
     AddSingletonDefinedAggregator<UsersPostsAggregator>();
 // Add services to the container.
