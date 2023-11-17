@@ -1,5 +1,6 @@
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Consul;
 using Practice.Gateway.Aggregator;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("ocelot.json");
 // Add services to the container.
 builder.Services.AddOcelot()
-    .AddSingletonDefinedAggregator<UsersPostsAggregator>();
+    .AddSingletonDefinedAggregator<UsersPostsAggregator>()
+    .AddConsul();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -1,6 +1,18 @@
 {
   "Routes": [
     {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "http",
+      "ServiceName": "AlojamientoService",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/gateway/alojamiento/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "ReRoutesCaseSensitive": false
+    },
+    {
       "Key": "users",
       "UpstreamPathTemplate": "/api/users",
       "UpstreamHttpMethod": [ "GET" ],
@@ -41,8 +53,12 @@
 
     }
   ],
-
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:7179"
+    "ServiceDiscoveryProvider": {
+      "Scheme": "http",
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
+    }
   }
 }
