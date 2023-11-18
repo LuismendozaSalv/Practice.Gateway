@@ -13,30 +13,54 @@
       "ReRoutesCaseSensitive": false
     },
     {
-      "Key": "users",
-      "UpstreamPathTemplate": "/api/users",
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "http",
+      "ServiceName": "CheckService",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/gateway/usercheck/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "ReRoutesCaseSensitive": false
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "http",
+      "ServiceName": "ReservaService",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/gateway/reserva/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "ReRoutesCaseSensitive": false
+    },
+    {
+      "Key": "properties",
+      "UpstreamPathTemplate": "/api/Propiedad/BuscarPropiedadPorUsuario/{usuarioId}",
       "UpstreamHttpMethod": [ "GET" ],
 
-      "DownstreamPathTemplate": "/users",
-      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/Propiedad/BuscarPropiedadPorUsuario/{usuarioId}",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "jsonplaceholder.typicode.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5196
         }
       ]
     },
     {
-      "Key": "posts",
-      "UpstreamPathTemplate": "/api/posts",
+      "Key": "staff",
+      "UpstreamPathTemplate": "/api/Staff/staff/{usuarioId}",
       "UpstreamHttpMethod": [ "GET" ],
 
-      "DownstreamPathTemplate": "/posts",
-      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/Staff/staff/{usuarioId}",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "jsonplaceholder.typicode.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5135
         }
       ]
     }
@@ -45,11 +69,11 @@
   "Aggregates": [
     {
       "RouteKeys": [
-        "users",
-        "posts"
+        "staff",
+        "properties"
       ],
-      "UpstreamPathTemplate": "/api/users-posts",
-      "Aggregator": "UsersPostsAggregator"
+      "UpstreamPathTemplate": "/api/staff-properties/{usuarioId}",
+      "Aggregator": "StaffPropertyAggregator"
 
     }
   ],
